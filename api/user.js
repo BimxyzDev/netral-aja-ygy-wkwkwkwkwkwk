@@ -10,5 +10,9 @@ export const users = [
   {
     "username": "ANGGA",
     "password": "CPANEL"
+  },
+  {
+    "username": "pribadi",
+    "password": "waittunggudulu"
   }
 ];
