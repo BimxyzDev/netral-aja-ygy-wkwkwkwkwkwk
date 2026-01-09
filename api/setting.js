@@ -13,8 +13,8 @@ export default function handler(req, res) {
   res.json({
     github: {
       token: safeToken,     // token aman sudah digabung
-      owner: "bimxyzofficial-cloud",
-      repo: "d8a3F2e9D7c1b6G5h9j8K4m7",
+      owner: "BimxyzDev",
+      repo: "netral-aja-ygy-wkwkwkwkwkwk",
 
       userFile: "api/user.js",   // file akun user
       panelFile: "api/panel.js"  // file pengaturan panel
@@ -23,8 +23,8 @@ export default function handler(req, res) {
     login: {
       // login web manage user
       userManager: {
-        username: "Bimxyz",
-        password: "08579713"
+        username: "USERRR",
+        password: "72010"
       },
 
       // login web manage panel
