@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>𝙒𝙀𝘽 𝘾𝙋𝘼𝙉𝙀𝙇 — 𝘽𝙞𝙢𝙭𝙮𝙯 𝙤𝙛𝙛𝙞𝙘𝙞𝙖𝙡</title>
+
+<!-- ============ SECURITY HEADERS (FIXED) ============ -->
+<meta http-equiv="Content-Security-Policy" 
+      content="
+        default-src 'self';
+        script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline';
+        style-src  'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline';
+        font-src   'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:;
+        img-src    'self' data: https:;
+        connect-src 'self';
+        frame-ancestors 'none';
+        form-action 'self';
+      ">
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- FONT AWESOME (ICON FIX) -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0d1117;
+  color: #e6e6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: hidden;
+}
+
+h1, h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.card {
+  background: #161b22;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  width: 460px;
+  margin: 0;
+  overflow-y: auto;
+  max-height: 90vh;
+  box-sizing: border-box;
+}
+
+input, select, button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  outline: none;
+  font-size: 14px;
+  background: #0d1117;
+  color: #e6e6e6;
+  transition: all 0.2s ease;
+}
+
+input:focus, select:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 2px rgba(88,166,255,0.3);
+}
+
+button {
+  cursor: pointer;
+  background: #238636;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  transition: 0.3s;
+}
+button:hover { background: #2ea043; }
+#logoutBtn { background: #da3633; }
+#logoutBtn:hover { background: #f85149; }
+.deleteBtn { background: #da3633; margin-top:5px; }
+.deleteBtn:hover { background: #f85149; }
+
+.info {
+  font-size: 12px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  background: #0d1117;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+}
+
+.server-status {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.server-status span {
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.online { background-color: #2ea043; color: #fff; }
+.maintenance { background-color: #da3633; color: #fff; }
+
+#result {
+  font-family: 'Poppins', sans-serif;
+  white-space: pre-wrap;
+  margin-top: 10px;
+  background: #0d1117;
+  padding: 10px;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #30363d;
+  font-size: 13px;
+}
+
+.contact {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 22px;
+}
+.contact a {
+  color: #58a6ff;
+  transition: 0.3s;
+}
+.contact a:hover {
+  color: #1f6feb;
+  transform: scale(1.1);
+}
+
+#historySection { display: none; }
+#historyList {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+#historyList .card { margin-bottom: 10px; }
+
+/* TAMBAHAN UNTUK 3 BUTTON VERTIKAL */
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 12px 5px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.action-btn i {
+  font-size: 14px;
+}
+
+.copy-user {
+  background: #1f6feb;
+  color: white;
+}
+
+.copy-user:hover {
+  background: #2c81ff;
+}
+
+.open-panel {
+  background: #238636;
+  color: white;
+}
+
+.open-panel:hover {
+  background: #2ea043;
+}
+
+.copy-pass {
+  background: #da3633;
+  color: white;
+}
+
+.copy-pass:hover {
+  background: #f85149;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+/* ====================== */
+/* CUSTOM MODAL & TOAST */
+/* ====================== */
+
+.custom-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+  width: 90%;
+  max-width: 400px;
+  border-radius: 16px;
+  padding: 25px;
+  border: 1px solid rgba(88, 166, 255, 0.2);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(88, 166, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
+  animation: modalSlideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.modal-icon.warning {
+  background: linear-gradient(135deg, #da3633, #f85149);
+  color: white;
+}
+
+.modal-icon.success {
+  background: linear-gradient(135deg, #238636, #2ea043);
+  color: white;
+}
+
+.modal-icon.info {
+  background: linear-gradient(135deg, #1f6feb, #2c81ff);
+  color: white;
+}
+
+.modal-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  color: white;
+  margin: 0;
+}
+
+.modal-message {
+  color: #c9d1d9;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.modal-btn-cancel {
+  background: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.modal-btn-cancel:hover {
+  background: rgba(88, 166, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.modal-btn-confirm {
+  background: linear-gradient(90deg, #238636, #2ea043);
+  color: white;
+}
+
+.modal-btn-confirm:hover {
+  background: linear-gradient(90deg, #2ea043, #3fb950);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(46, 160, 67, 0.3);
+}
+
+.modal-btn-delete {
+  background: linear-gradient(90deg, #da3633, #f85149);
+  color: white;
+}
+
+.modal-btn-delete:hover {
+  background: linear-gradient(90deg, #f85149, #ff6b6b);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(218, 54, 51, 0.3);
+}
+
+/* TOAST NOTIFICATION */
+.custom-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #161b22, #0d1117);
+  padding: 15px 20px;
+  border-radius: 12px;
+  border-left: 4px solid #2ea043;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(46, 160, 67, 0.2);
+  max-width: 350px;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.toast-icon.success {
+  background: linear-gradient(135deg, #238636, #2ea043);
+  color: white;
+}
+
+.toast-icon.error {
+  background: linear-gradient(135deg, #da3633, #f85149);
+  color: white;
+}
+
+.toast-icon.info {
+  background: linear-gradient(135deg, #1f6feb, #2c81ff);
+  color: white;
+}
+
+.toast-message {
+  color: #c9d1d9;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* SECURITY STYLES */
+.password-masked {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  background: #1c1c1c;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.password-masked:hover {
+  background: #2a2a2a;
+}
+
+.security-warning {
+  border: 1px solid #f0a73a;
+  background: rgba(240, 167, 58, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+@media(max-width: 500px){
+  .card {
+    width: 95%;
+    padding: 20px;
+  }
+  .button-group {
+    flex-direction: column;
+  }
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+  .modal-buttons {
+    flex-direction: column;
+  }
+  .custom-toast {
+    left: 20px;
+    right: 20px;
+    max-width: none;
+  }
+}
+</style>
+</head>
+<body> 
+<!-- CUSTOM MODAL -->
+<div id="customModal" class="custom-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div id="modalIcon" class="modal-icon warning">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 id="modalTitle" class="modal-title">Konfirmasi</h3>
+    </div>
+    <p id="modalMessage" class="modal-message">Pesan konfirmasi akan muncul di sini</p>
+    <div class="modal-buttons">
+      <button id="modalCancel" class="modal-btn modal-btn-cancel">
+        <i class="fas fa-times"></i> Batal
+      </button>
+      <button id="modalConfirm" class="modal-btn modal-btn-confirm">
+        <i class="fas fa-check"></i> Lanjutkan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM TOAST -->
+<div id="customToast" class="custom-toast">
+  <div id="toastIcon" class="toast-icon success">
+    <i class="fas fa-check"></i>
+  </div>
+  <p id="toastMessage" class="toast-message">Pesan notifikasi</p>
+</div>
+
+<!-- LOGIN PANEL -->
+<div class="card" id="loginDiv">
+  <div class="server-status" id="serverStatus">Checking server...</div>
+  <h1>Reseller Panel Login</h1>
+  <input type="text" id="username" placeholder="Username">
+  <div style="position: relative; width: 100%;">
+  <input type="password" id="password" placeholder="Password" autocomplete="off" style="width: 100%;">
+  </div>
+  <button id="loginBtn">Login</button>
+  <div id="loginError" style="color:red; text-align:center; margin-top:5px;"></div>
+
+  <div style="text-align:center; margin-top:15px; font-size:13px;">
+    Belum punya akun? 
+    <a href="https://www.bimxyz.my.id/beli-reseller-panel" target="_blank" style="color:#58a6ff; text-decoration:none;">
+      <b>Beli sekarang</b>
+    </a>
+  </div>
+</div>
+
+<!-- CPANEL UTAMA -->
+<div class="card" id="panel" style="display:none;">
+  <div class="server-status" id="serverStatusPanel">Checking server...</div>
+  <div class="info">
+    📍 ᴄᴀᴛᴀᴛᴀɴ ᴘᴇɴᴛɪɴɢ:
+    <br>• PANEL JANGAN DI DDOS
+    <br>• TUTUPI DOMAIN PANEL KETIKA DI SCREENSHOT
+    <br>• DOMAIN PANEL JANGAN DI SEBAR
+    <br>• ALL TRANSAKSI NO REFUND
+    <br>• EXPIRED PANEL ±1 BULAN PENUH
+    <br>• BIKIN SERVER HARUS DIPAKAI
+    <br>• MASUK GRUB INFORMATION (IKON WHATSAPP DIBAWAH) UNTUK UPDATE STATUS
+  </div>
+  <h2>Buat Server</h2>
+  <input type="text" id="serverName" placeholder="Nama Server" maxlength="20">
+  <select id="serverRam"></select>
+  <button id="createBtn">Buat Server</button>
+  <button id="listBtn">Lihat Jumlah Server</button>
+  <button id="historyBtn">Lihat Riwayat</button>
+  <div id="result"></div>
+  
+  <div id="actionButtons" class="button-group" style="display: none;">
+    <button class="action-btn copy-user" id="copyUserBtn">
+      <i class="fas fa-user"></i> Copy User
+    </button>
+    <button class="action-btn open-panel" id="openPanelBtn">
+      <i class="fas fa-external-link-alt"></i> Buka Panel
+    </button>
+    <button class="action-btn copy-pass" id="copyPassBtn">
+      <i class="fas fa-key"></i> Copy Pass
+    </button>
+  </div>
+  
+  <button id="logoutBtn" style="margin-top:10px;">Logout</button>
+  <div class="contact">
+    <a href="https://chat.whatsapp.com/CoY2paBPem72BNAPvAjgyJ" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.bimxyz.my.id" target="_blank"><i class="fas fa-headset"></i></a>
+  </div>
+</div>
+
+<!-- RIWAYAT SERVER -->
+<div class="card" id="historySection">
+  <h2>Riwayat Server</h2>
+  <div id="historyList"></div>
+  <button id="backBtn">Kembali</button>
+</div>
+
+<script>
+// ======================
+// SIMPLE SECURITY CONFIG
+// ======================
+let currentSessionId = localStorage.getItem('session_id') || '';
+let loginAttemptCount = 0;
+const MAX_LOGIN_ATTEMPTS = 5;
+
+// ======================
+// CUSTOM ALERT SYSTEM
+// ======================
+const customModal = document.getElementById('customModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalMessage = document.getElementById('modalMessage');
+const modalIcon = document.getElementById('modalIcon');
+const modalCancel = document.getElementById('modalCancel');
+const modalConfirm = document.getElementById('modalConfirm');
+
+const customToast = document.getElementById('customToast');
+const toastMessage = document.getElementById('toastMessage');
+const toastIcon = document.getElementById('toastIcon');
+
+let currentResolve = null;
+
+function showConfirm(title, message, type = 'warning', confirmText = 'Lanjutkan') {
+  return new Promise((resolve) => {
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    currentResolve = resolve;
+    
+    modalIcon.className = 'modal-icon ' + type;
+    const iconClass = {
+      warning: 'fas fa-exclamation-triangle',
+      danger: 'fas fa-trash-alt',
+      info: 'fas fa-info-circle',
+      success: 'fas fa-check-circle'
+    }[type] || 'fas fa-exclamation-triangle';
+    
+    modalIcon.innerHTML = `<i class="${iconClass}"></i>`;
+    
+    modalConfirm.className = `modal-btn ${type === 'danger' ? 'modal-btn-delete' : 'modal-btn-confirm'}`;
+    modalConfirm.innerHTML = `<i class="fas fa-check"></i> ${confirmText}`;
+    
+    customModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+}
+
+function showToast(message, type = 'success', duration = 3000) {
+  toastMessage.textContent = message;
+  toastIcon.className = 'toast-icon ' + type;
+  
+  const iconClass = {
+    success: 'fas fa-check',
+    error: 'fas fa-times-circle',
+    info: 'fas fa-info-circle',
+    warning: 'fas fa-exclamation-triangle'
+  }[type] || 'fas fa-check';
+  
+  toastIcon.innerHTML = `<i class="${iconClass}"></i>`;
+  
+  const borderColor = {
+    success: '#2ea043',
+    error: '#da3633',
+    info: '#1f6feb',
+    warning: '#f0a73a'
+  }[type] || '#2ea043';
+  
+  customToast.style.borderLeftColor = borderColor;
+  customToast.classList.add('show');
+  
+  setTimeout(() => {
+    customToast.classList.remove('show');
+  }, duration);
+}
+
+modalCancel.addEventListener('click', () => {
+  customModal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+  if (currentResolve) {
+    currentResolve(false);
+    currentResolve = null;
+  }
+});
+
+modalConfirm.addEventListener('click', () => {
+  customModal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+  if (currentResolve) {
+    currentResolve(true);
+    currentResolve = null;
+  }
+});
+
+customModal.addEventListener('click', (e) => {
+  if (e.target === customModal) {
+    customModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    if (currentResolve) {
+      currentResolve(false);
+      currentResolve = null;
+    }
+  }
+});
+
+// ======================
+// UI ELEMENTS
+// ======================
+const loginDiv = document.getElementById('loginDiv');
+const panel = document.getElementById('panel');
+const historySection = document.getElementById('historySection');
+const loginBtn = document.getElementById('loginBtn');
+const loginError = document.getElementById('loginError');
+const resultDiv = document.getElementById('result');
+const serverStatus = document.getElementById('serverStatus');
+const serverStatusPanel = document.getElementById('serverStatusPanel');
+const ramSelect = document.getElementById('serverRam');
+const historyBtn = document.getElementById('historyBtn');
+const historyList = document.getElementById('historyList');
+const backBtn = document.getElementById('backBtn');
+
+let currentServerData = null;
+const actionButtons = document.getElementById('actionButtons');
+const copyUserBtn = document.getElementById('copyUserBtn');
+const openPanelBtn = document.getElementById('openPanelBtn');
+const copyPassBtn = document.getElementById('copyPassBtn');
+
+// ======================
+// RAM OPTIONS
+// ======================
+const ramOptions = [
+  {display: '🔰 1 GB RAM', value: '1'},
+  {display: '🔰 2 GB RAM', value: '2'},
+  {display: '🔰 3 GB RAM', value: '3'},
+  {display: '🔰 4 GB RAM', value: '4'},
+  {display: '🔰 5 GB RAM', value: '5'},
+  {display: '🔰 6 GB RAM', value: '6'},
+  {display: '🔰 7 GB RAM', value: '7'},
+  {display: '🔰 8 GB RAM', value: '8'},
+  {display: '🔰 9 GB RAM', value: '9'},
+  {display: '🔰 10 GB RAM', value: '10'},
+  {display: '🚀 UNLIMITED RAM', value: 'unlimited'}
+];
+
+ramSelect.innerHTML = '<option value="" disabled selected>🎯 Pilih kapasitas RAM...</option>';
+ramOptions.forEach((item) => {
+  const opt = document.createElement('option');
+  opt.value = item.value;
+  opt.textContent = item.display;
+  ramSelect.appendChild(opt);
+});
+
+// ======================
+// SERVER STATUS CHECK
+// ======================
+(async () => {
+  try {
+    const res = await fetch('/api/server');
+    const data = await res.json();
+    const statusHTML = `<span class="${data.success?'online':'maintenance'}">${data.success?'ONLINE':'OFFLINE'}</span>`;
+    serverStatus.innerHTML = statusHTML;
+    serverStatusPanel.innerHTML = statusHTML;
+  } catch {
+    const offlineHTML = `<span class="maintenance">OFFLINE</span>`;
+    serverStatus.innerHTML = offlineHTML;
+    serverStatusPanel.innerHTML = offlineHTML;
+  }
+})();
+
+// ======================
+// ACTION BUTTONS
+// ======================
+function showActionButtons(data) {
+  currentServerData = data;
+  actionButtons.style.display = 'flex';
+}
+
+function hideActionButtons() {
+  actionButtons.style.display = 'none';
+  currentServerData = null;
+}
+
+copyUserBtn.addEventListener('click', () => {
+  if (!currentServerData || !currentServerData.username) return;
+  navigator.clipboard.writeText(currentServerData.username)
+    .then(() => showToast(`Username "${currentServerData.username}" berhasil disalin`, 'success'))
+    .catch(err => {
+      console.error('Copy failed:', err);
+      showToast('Gagal menyalin username', 'error');
+    });
+});
+
+openPanelBtn.addEventListener('click', () => {
+  if (!currentServerData || !currentServerData.panel) return;
+  window.open(currentServerData.panel, '_blank');
+});
+
+copyPassBtn.addEventListener('click', () => {
+  if (!currentServerData || !currentServerData.password) return;
+  navigator.clipboard.writeText(currentServerData.password)
+    .then(() => showToast('Password berhasil disalin ke clipboard', 'success'))
+    .catch(err => {
+      console.error('Copy failed:', err);
+      showToast('Gagal menyalin password', 'error');
+    });
+});
+
+// ======================
+// SESSION CHECK (MODIFIED)
+// ======================
+function checkLogin(){
+  currentSessionId = localStorage.getItem('session_id') || '';
+  
+  if(currentSessionId){
+    // Verifikasi session dengan server
+    fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'verify',
+        session_id: currentSessionId
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.success){
+        loginDiv.style.display='none';
+        panel.style.display='block';
+      } else {
+        // Session invalid
+        localStorage.removeItem('session_id');
+        currentSessionId = '';
+        loginDiv.style.display='block';
+        panel.style.display='none';
+        hideActionButtons();
+      }
+    })
+    .catch(() => {
+      // Jika error, tetap logout untuk safety
+      localStorage.removeItem('session_id');
+      currentSessionId = '';
+      loginDiv.style.display='block';
+      panel.style.display='none';
+      hideActionButtons();
+    });
+  } else {
+    loginDiv.style.display='block';
+    panel.style.display='none';
+    hideActionButtons();
+  }
+}
+
+// Check session on load
+checkLogin();
+
+// Auto-check session setiap 30 detik
+setInterval(checkLogin, 30000);
+
+// ======================
+// LOGIN HANDLER (MODIFIED)
+// ======================
+loginBtn.addEventListener('click', async ()=>{
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  loginError.textContent="";
+  
+  // Rate limiting check
+  loginAttemptCount++;
+  if(loginAttemptCount > MAX_LOGIN_ATTEMPTS){
+    loginError.textContent = "Terlalu banyak percobaan login. Coba lagi nanti.";
+    showToast('Terlalu banyak percobaan login', 'error');
+    return;
+  }
+  
+  try{
+    const res = await fetch('/api/server',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        action:'login', 
+        username, 
+        password
+      })
+    });
+    const data = await res.json();
+    
+    if(data.success){
+      // Reset attempt counter
+      loginAttemptCount = 0;
+      
+      // Save session ID
+      if(data.session_id){
+        localStorage.setItem('session_id', data.session_id);
+        currentSessionId = data.session_id;
+      }
+      
+      const now = new Date();
+      localStorage.setItem('username', username);
+      localStorage.setItem('loginTime', now.toISOString());
+      
+      loginDiv.style.display='none';
+      panel.style.display='block';
+      hideActionButtons();
+      
+      showToast('Login berhasil!', 'success');
+    } else {
+      loginError.textContent = data.message || "Login gagal";
+      
+      // Show attempts left
+      const attemptsLeft = MAX_LOGIN_ATTEMPTS - loginAttemptCount;
+      if(attemptsLeft > 0){
+        showToast(`Login gagal. Sisa percobaan: ${attemptsLeft}`, 'error');
+      } else {
+        showToast('Terlalu banyak percobaan login', 'error');
+      }
+    }
+  }catch(err){
+    loginError.textContent = err.message;
+    showToast('Error koneksi server', 'error');
+  }
+});
+
+// ======================
+// LOGOUT (MODIFIED)
+// ======================
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  try {
+    // Kirim request logout ke server
+    await fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'logout',
+        session_id: currentSessionId
+      })
+    });
+  } catch (err) {
+    // Ignore errors on logout
+  } finally {
+    // Clear semua data lokal
+    localStorage.removeItem('session_id');
+    localStorage.removeItem('username');
+    localStorage.removeItem('loginTime');
+    localStorage.removeItem('serverHistory');
+    
+    currentSessionId = '';
+    loginAttemptCount = 0;
+    
+    // Reset UI
+    hideActionButtons();
+    location.reload();
+  }
+});
+
+// ======================
+// CREATE SERVER (MODIFIED - tambah session_id)
+// ======================
+document.getElementById('createBtn').addEventListener('click', async ()=>{
+  const name = document.getElementById('serverName').value.trim();
+  const ram = ramSelect.value;
+  
+  if(!name) {
+    showToast('Nama server harus diisi', 'warning');
+    return;
+  }
+  
+  if(!currentSessionId){
+    showToast('Session expired. Silakan login kembali.', 'error');
+    location.reload();
+    return;
+  }
+  
+  resultDiv.textContent="Membuat server...";
+  
+  try{
+    const res = await fetch('/api/server',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        action:'create', 
+        name, 
+        ram,
+        session_id: currentSessionId  // ← TAMBAH INI
+      })
+    });
+    
+    const data = await res.json();
+    if(data.success){
+      const ramDisplay = data.ram === 'unlimited' ? 'Unlimited' : `${data.ram} GB`;
+      resultDiv.textContent=`✅ Server berhasil dibuat!\nLogin Panel: ${data.panel}\nUsername: ${data.username}\nEmail: ${data.email}\nPassword: ${data.password}\nRAM: ${ramDisplay}\nCara run script: https://youtube.com/shorts/WkJDUaYZ07I?si=2EevDBiJa3yHP909`;
+
+      showActionButtons({
+        username: data.username,
+        password: data.password,
+        panel: data.panel
+      });
+
+      const history = JSON.parse(localStorage.getItem('serverHistory')||'[]');
+      history.push({
+        date: new Date().toLocaleString(),
+        username: data.username,
+        password: data.password,
+        panel: data.panel,
+        serverId: data.serverId
+      });
+      localStorage.setItem('serverHistory', JSON.stringify(history));
+      
+      showToast('✨ Server berhasil dibuat!', 'success');
+    } else {
+      resultDiv.textContent="❌ Gagal: "+data.message;
+      hideActionButtons();
+      showToast('Gagal membuat server: ' + data.message, 'error');
+      
+      // Jika session expired, reload
+      if(data.message.includes('Session') || data.message.includes('expired')){
+        setTimeout(() => location.reload(), 2000);
+      }
+    }
+  }catch(err){
+    resultDiv.textContent="⚠️ Error: "+err.message;
+    hideActionButtons();
+    showToast('Error koneksi server', 'error');
+  }
+});
+
+// ======================
+// LIST SERVERS (MODIFIED - tambah session_id)
+// ======================
+document.getElementById('listBtn').addEventListener('click', async ()=>{
+  if(!currentSessionId){
+    showToast('Session expired. Silakan login kembali.', 'error');
+    location.reload();
+    return;
+  }
+  
+  resultDiv.textContent="Mengambil jumlah server...";
+  
+  try{
+    const res = await fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'list',
+        session_id: currentSessionId  // ← TAMBAH INI
+      })
+    });
+    
+    const data = await res.json();
+    if(data.success) {
+      resultDiv.textContent=`📊 Jumlah server di panel: ${data.count}`;
+      showToast(`📊 Ditemukan ${data.count} server aktif`, 'info');
+    } else {
+      resultDiv.textContent="❌ Gagal ambil data: "+data.message;
+      showToast('Gagal mengambil data server', 'error');
+    }
+  }catch(err){
+    resultDiv.textContent="⚠️ Error: "+err.message;
+    showToast('Error koneksi server', 'error');
+  }
+});
+
+// ======================
+// HISTORY
+// ======================
+historyBtn.addEventListener('click', ()=>{
+  panel.style.display='none';
+  historySection.style.display='block';
+  hideActionButtons();
+  renderHistory();
+});
+
+backBtn.addEventListener('click', ()=>{
+  historySection.style.display='none';
+  panel.style.display='block';
+});
+
+function renderHistory(){
+  historyList.innerHTML='';
+  const history = JSON.parse(localStorage.getItem('serverHistory')||'[]');
+  if(history.length===0){
+    historyList.innerHTML='<p>Tidak ada riwayat server.</p>';
+    return;
+  }
+  
+  history.forEach((entry,i)=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <strong>${escapeHTML(entry.username)}</strong><br>
+      Password: ${escapeHTML(entry.password)}<br>
+      Panel: <a href="${escapeHTML(entry.panel)}" target="_blank">${escapeHTML(entry.panel)}</a><br>
+      Tanggal: ${escapeHTML(entry.date)}
+    `;
+    
+    const delBtn = document.createElement('button');
+    delBtn.textContent='Hapus Server';
+    delBtn.className='deleteBtn';
+    delBtn.addEventListener('click', async ()=>{
+      if(!currentSessionId){
+        showToast('Session expired. Silakan login kembali.', 'error');
+        location.reload();
+        return;
+      }
+      
+      const confirmed = await showConfirm(
+        'Hapus Server',
+        `Server ${escapeHTML(entry.username)} akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.`,
+        'danger',
+        'Ya, Hapus'
+      );
+      
+      if(!confirmed) return;
+      
+      try{
+        const res = await fetch('/api/server',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            action:'delete', 
+            serverId: entry.serverId,
+            session_id: currentSessionId  // ← TAMBAH INI
+          })
+        });
+        
+        const data = await res.json();
+        if(data.success){
+          showToast(`Server ${entry.username} berhasil dihapus`, 'success');
+          history.splice(i,1);
+          localStorage.setItem('serverHistory', JSON.stringify(history));
+          renderHistory();
+        } else {
+          showToast('Gagal menghapus server: ' + data.message, 'error');
+        }
+      }catch(err){
+        showToast('Error koneksi server', 'error');
+      }
+    });
+    
+    card.appendChild(delBtn);
+    historyList.appendChild(card);
+  });
+}
+
+// ======================
+// XSS PROTECTION FUNCTION
+// ======================
+function escapeHTML(text) {
+  if (typeof text !== 'string') return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ======================
+// AUTO-LOGOUT ON INACTIVITY (OPTIONAL)
+// ======================
+let inactivityTimer;
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  if(currentSessionId){
+    inactivityTimer = setTimeout(() => {
+      showToast('Session berakhir karena tidak aktif', 'warning');
+      document.getElementById('logoutBtn').click();
+    }, 20 * 60 * 1000); // 20 menit
+  }
+}
+
+// Reset timer pada aktivitas user
+['click', 'mousemove', 'keypress', 'scroll'].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer);
+});
+
+// Start timer
+resetInactivityTimer();
+
+// ======================
+// INPUT VALIDATION
+// ======================
+document.getElementById('serverName').addEventListener('input', function(e){
+  // Hanya izinkan alphanumeric, dash, dan underscore
+  this.value = this.value.replace(/[^a-zA-Z0-9-_]/g, '');
+});
+
+// ======================
+// PASSWORD VISIBILITY TOGGLE (OPTIONAL)
+// ======================
+
+
+</script>
+</body>
+</html>
