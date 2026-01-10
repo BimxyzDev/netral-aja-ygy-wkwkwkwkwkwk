@@ -5,7 +5,7 @@ export default function handler(req, res) {
   // === TOKEN DISAMARKAN (AMAN) ===
   const part1 = "github_";   // depan token
   const part2 = "pat_"; // tengah token
-  const part3 = "11BTL4JUA02gQqRcL2AHjz_YqDrR5zOA5p8Kkn8izer8DIAz22cyO0sDQ8SVqz3dNOZEF5D5M4EYBmxYfV"; // tengah 2
+  const part3 = "11BTL4JUA0O1g7wrmoNdYJ_jJ1w4iEJbb9Gng5yckqVIM4aiQ62TnbPXCtkMbARPvZKGET6HBOwez3dCZ7"; // tengah 2
 
   // gabungin jadi token utuh
   const safeToken = part1 + part2 + part3;
