@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "src": "^/api/(setting|panel|user|account|P)\\.js$",
+      "status": 404
+    },
+    {
+      "src": "^/api/.*",
+      "dest": "/api/server.js"
+    }
+  ]
+}
