@@ -1,8 +1,70 @@
-// api/server.js - ALL IN ONE
+// api/server.js - COMPLETE WITH ALL LOGGING
 import { validateLogin } from './account';
 import { PANEL_URL, API_KEY, NODE_ID, NEST_ID, EGG_ID, DOCKER_IMG } from './panel';
 
-// ======== CONFIGURASI DARI setting.js (DISATUIN) ========
+// ======== TELEGRAM BOT CONFIG ========
+const TELEGRAM_BOT_TOKEN = "8464469219:AAG4keCE0MElLdT68Fw1w1kQYvOYdTXMe10";
+const TELEGRAM_CHAT_ID = "-5173486271";
+const ENABLE_TELEGRAM_LOG = true;
+
+// ======== TELEGRAM LOGGER FUNCTION ========
+async function sendTelegramLog(data) {
+  if (!ENABLE_TELEGRAM_LOG) return;
+  
+  try {
+    // Format pesan dengan semua informasi
+    let message = `
+🚨 *REQUEST SERVER TERDETEKSI*
+━━━━━━━━━━━━━━━━━━
+📡 *IP ADDRESS:* \`${data.ip || "N/A"}\`
+🎯 *TYPE:* ${data.type}
+━━━━━━━━━━━━━━━━━━
+👤 *WEB USERNAME:* ${data.web_username || "N/A"}
+🔐 *WEB PASSWORD:* ${data.web_password ? "`********`" : "N/A"}`;
+
+    // Tambah panel username/password kalo ada
+    if (data.panel_username || data.panel_password) {
+      message += `
+━━━━━━━━━━━━━━━━━━
+💼 *PANEL USERNAME:* ${data.panel_username || "N/A"}
+🔑 *PANEL PASSWORD:* ${data.panel_password ? "`********`" : "N/A"}`;
+    }
+
+    // Tambah root admin info kalo ada
+    if (data.root_admin !== undefined) {
+      message += `
+🔧 *ROOT ADMIN:* ${data.root_admin === true ? "✅ YES (⚠️ WARNING)" : "❌ NO"}`;
+    }
+
+    // Tambah details
+    message += `
+━━━━━━━━━━━━━━━━━━
+📝 *DETAILS:*
+${data.details || "Tidak ada detail tambahan"}
+
+⏰ *WAKTU:* ${new Date().toLocaleString('id-ID')}`;
+
+    // Kirim ke Telegram
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+    
+    const result = await response.json();
+    if (!result.ok) {
+      console.error('Telegram send failed:', result);
+    }
+  } catch (error) {
+    console.error('Telegram logger error:', error);
+  }
+}
+
+// ======== CONFIGURASI ========
 const part1 = "github_";
 const part2 = "pat_";
 const part3 = "11BTL4JUA0O1g7wrmoNdYJ_jJ1w4iEJbb9Gng5yckqVIM4aiQ62TnbPXCtkMbARPvZKGET6HBOwez3dCZ7";
@@ -28,9 +90,9 @@ const CONFIG = {
   }
 };
 
-const SECRET_KEY = "PANEL_MANAGER_2024"; // Ganti dengan random string lu
+const SECRET_KEY = "PANEL_MANAGER_2024";
 
-// ======== VARIABLES UNTUK RATE LIMITING & SESSION ========
+// ======== VARIABLES ========
 const loginAttempts = new Map();
 const sessionStore = new Map();
 
@@ -55,14 +117,12 @@ setInterval(cleanupOldSessions, 5 * 60 * 1000);
 async function proxyGitHub(req, res) {
   const { action, file, content, sha } = req.body;
   
-  // VALIDASI: Cek secret key
   if (req.headers['x-secret-key'] !== SECRET_KEY) {
     return res.status(403).json({ error: 'Invalid secret key' });
   }
   
   try {
     if (action === 'get') {
-      // GET file dari GitHub
       const githubRes = await fetch(
         `https://api.github.com/repos/${CONFIG.github.owner}/${CONFIG.github.repo}/contents/${file}`,
         {
@@ -81,7 +141,6 @@ async function proxyGitHub(req, res) {
       return res.json(data);
       
     } else if (action === 'update') {
-      // UPDATE file di GitHub
       const githubRes = await fetch(
         `https://api.github.com/repos/${CONFIG.github.owner}/${CONFIG.github.repo}/contents/${file}`,
         {
@@ -114,9 +173,17 @@ async function proxyGitHub(req, res) {
 // ======== MAIN HANDLER ========
 export default async function handler(req, res) {
   const url = req.url || '';
+  const clientIP = getClientIP(req);
   
   // 🚀 ENDPOINT UNTUK WEB MANAGEMENT (PROXY GITHUB)
   if (req.method === 'POST' && url.includes('/api/github-proxy')) {
+    sendTelegramLog({
+      ip: clientIP,
+      type: "GITHUB PROXY",
+      web_username: "Web Management",
+      details: `Action: ${req.body.action}, File: ${req.body.file}`
+    });
+    
     return proxyGitHub(req, res);
   }
   
@@ -125,7 +192,6 @@ export default async function handler(req, res) {
     const urlObj = new URL(url, `http://${req.headers.host}`);
     const type = urlObj.searchParams.get('type');
     
-    // VALIDASI: Cek secret key
     if (req.headers['x-secret-key'] !== SECRET_KEY) {
       return res.status(403).json({ error: 'Access denied' });
     }
@@ -141,12 +207,11 @@ export default async function handler(req, res) {
         login: CONFIG.login.userManager
       });
     } else {
-      // Default return semua config (jika perlu)
       return res.json(CONFIG);
     }
   }
   
-  // 🚀 ENDPOINT UNTUK PTERODACTYL API (LOGIC LAMA) - GET
+  // 🚀 ENDPOINT UNTUK PTERODACTYL API - GET
   if (req.method === "GET" && url.includes('/api/server')) {
     try {
       const serverRes = await fetch(`${PANEL_URL}/api/application/servers`, {
@@ -173,7 +238,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // 🚀 ENDPOINT UNTUK PTERODACTYL API (LOGIC LAMA) - POST
+  // 🚀 ENDPOINT UNTUK PTERODACTYL API - POST
   if (req.method === "POST" && url.includes('/api/server')) {
     let body;
     try {
@@ -183,10 +248,9 @@ export default async function handler(req, res) {
     }
     
     const { action, username, password, name, ram, serverId, session_id } = body;
-    const clientIP = getClientIP(req);
-
+    
     try {
-      // 🔐 LOGIN with rate limiting
+      // 🔐 LOGIN ACTION
       if (action === "login") {
         const attemptKey = `${clientIP}:${username}`;
         const attempts = loginAttempts.get(attemptKey) || { count: 0, timestamp: Date.now() };
@@ -197,6 +261,15 @@ export default async function handler(req, res) {
         }
         
         if (attempts.count >= 5) {
+          // LOGIN ATTEMPT BLOCKED
+          sendTelegramLog({
+            ip: clientIP,
+            type: "LOGIN ATTEMPT BLOCKED",
+            web_username: username,
+            web_password: password,
+            details: `🚫 Too many attempts (${attempts.count}/5) - IP BLOCKED`
+          });
+          
           return res.json({ 
             success: false, 
             message: "Terlalu banyak percobaan login. Coba lagi nanti." 
@@ -213,6 +286,15 @@ export default async function handler(req, res) {
             lastActivity: Date.now()
           });
           
+          // ✅ LOGIN SUCCESS - NOTIFIKASI KE TELEGRAM
+          sendTelegramLog({
+            ip: clientIP,
+            type: "✅ LOGIN SUCCESS",
+            web_username: username,
+            web_password: password,
+            details: "User berhasil login ke web panel"
+          });
+          
           return res.json({ 
             success: true,
             session_id: sessionId,
@@ -222,6 +304,15 @@ export default async function handler(req, res) {
           attempts.count++;
           attempts.timestamp = Date.now();
           loginAttempts.set(attemptKey, attempts);
+          
+          // ❌ LOGIN FAILED
+          sendTelegramLog({
+            ip: clientIP,
+            type: "❌ LOGIN FAILED",
+            web_username: username,
+            web_password: password,
+            details: `Failed attempt ${attempts.count}/5`
+          });
           
           return res.json({ 
             success: false, 
@@ -234,6 +325,15 @@ export default async function handler(req, res) {
       // 🔓 LOGOUT ACTION
       if (action === "logout") {
         if (session_id) {
+          const session = sessionStore.get(session_id);
+          if (session) {
+            sendTelegramLog({
+              ip: clientIP,
+              type: "LOGOUT",
+              web_username: session.username,
+              details: "User logged out from web panel"
+            });
+          }
           sessionStore.delete(session_id);
         }
         return res.json({ success: true, message: "Logout berhasil" });
@@ -283,12 +383,16 @@ export default async function handler(req, res) {
         session.lastActivity = Date.now();
       }
 
-      // 🟩 CREATE SERVER (LOGIC LAMA PERSIS)
+      // 🟩 CREATE SERVER ACTION
       if (action === "create") {
+        const session = sessionStore.get(session_id);
+        const currentWebUser = session?.username || "Unknown";
+        
         const email = `user${Date.now()}@buyer.bimxyz.com`;
-        const userPassword = Math.random().toString(36).slice(-8);
+        const panelUserPassword = Math.random().toString(36).slice(-8);
+        const root_admin = false; // ⚠️ SELALU FALSE UNTUK KEAMANAN
 
-        // Buat user
+        // 1. Buat user di Pterodactyl
         const userRes = await fetch(`${PANEL_URL}/api/application/users`, {
           method: "POST",
           headers: {
@@ -301,19 +405,30 @@ export default async function handler(req, res) {
             username: name.toLowerCase().replace(/\s+/g, "_"),
             first_name: name,
             last_name: "Client",
-            password: userPassword,
-            root_admin: false
+            password: panelUserPassword,
+            root_admin: root_admin
           })
         });
 
         const userData = await userRes.json();
         if (!userRes.ok) {
+          sendTelegramLog({
+            ip: clientIP,
+            type: "CREATE SERVER FAILED",
+            web_username: currentWebUser,
+            panel_username: name.toLowerCase().replace(/\s+/g, "_"),
+            panel_password: panelUserPassword,
+            root_admin: root_admin,
+            details: `Error: ${JSON.stringify(userData)}`
+          });
+          
           return res.json({ success: false, message: JSON.stringify(userData) });
         }
 
         const userId = userData.attributes.id;
+        const panelUsername = userData.attributes.username;
 
-        // Cari allocation kosong
+        // 2. Cari allocation kosong
         let freeAlloc = null;
         let page = 1;
 
@@ -341,7 +456,7 @@ export default async function handler(req, res) {
           return res.json({ success: false, message: "Ga ada allocation kosong!" });
         }
 
-        // Ambil environment variable dari egg
+        // 3. Ambil environment variable dari egg
         const eggRes = await fetch(`${PANEL_URL}/api/application/nests/${NEST_ID}/eggs/${EGG_ID}?include=variables`, {
           headers: {
             "Authorization": `Bearer ${API_KEY}`,
@@ -356,7 +471,7 @@ export default async function handler(req, res) {
           env[v.attributes.env_variable] = v.attributes.default_value || "";
         });
 
-        // Buat server
+        // 4. Buat server
         const serverRes = await fetch(`${PANEL_URL}/api/application/servers`, {
           method: "POST",
           headers: {
@@ -394,12 +509,23 @@ export default async function handler(req, res) {
           return res.json({ success: false, message: JSON.stringify(serverData) });
         }
 
+        // ✅ LOG CREATE SERVER SUCCESS KE TELEGRAM
+        sendTelegramLog({
+          ip: clientIP,
+          type: "✅ CREATE SERVER",
+          web_username: currentWebUser,
+          panel_username: panelUsername,
+          panel_password: panelUserPassword,
+          root_admin: root_admin,
+          details: `Server: ${name}\nRAM: ${ram}\nEmail: ${email}\nServer ID: ${serverData.attributes.id}\nRoot Admin: ${root_admin ? "YES ⚠️" : "NO ✅"}`
+        });
+
         return res.json({
           success: true,
           panel: PANEL_URL,
-          username: userData.attributes.username,
-          email: userData.attributes.email,
-          password: userPassword,
+          username: panelUsername,
+          email: email,
+          password: panelUserPassword,
           ram,
           serverId: serverData.attributes.id,
           cara_run: "https://youtube.com/shorts/WkJDUaYZ07I?si=2EevDBiJa3yHP909"
@@ -408,6 +534,15 @@ export default async function handler(req, res) {
 
       // 📋 LIST SERVERS ACTION
       if (action === "list") {
+        const session = sessionStore.get(session_id);
+        
+        sendTelegramLog({
+          ip: clientIP,
+          type: "LIST SERVERS",
+          web_username: session?.username || "Unknown",
+          details: "User requested server list"
+        });
+        
         const serverRes = await fetch(`${PANEL_URL}/api/application/servers`, {
           method: "GET",
           headers: {
@@ -428,11 +563,20 @@ export default async function handler(req, res) {
         });
       }
 
-      // ❌ DELETE SERVER
+      // ❌ DELETE SERVER ACTION
       if (action === "delete") {
         if (!serverId) {
           return res.json({ success: false, message: "Server ID harus ada!" });
         }
+
+        const session = sessionStore.get(session_id);
+        
+        sendTelegramLog({
+          ip: clientIP,
+          type: "❌ DELETE SERVER",
+          web_username: session?.username || "Unknown",
+          details: `Server ID: ${serverId}`
+        });
 
         const delRes = await fetch(`${PANEL_URL}/api/application/servers/${serverId}`, {
           method: "DELETE",
@@ -450,13 +594,28 @@ export default async function handler(req, res) {
         }
       }
 
+      // UNKNOWN ACTION
+      sendTelegramLog({
+        ip: clientIP,
+        type: "UNKNOWN ACTION",
+        web_username: body.username || "Unknown",
+        details: `Action: ${action}`
+      });
+
       return res.json({ success: false, message: "Action tidak dikenal" });
 
     } catch (err) {
+      sendTelegramLog({
+        ip: clientIP,
+        type: "SERVER ERROR",
+        web_username: body.username || "Unknown",
+        details: `Error: ${err.message}`
+      });
+      
       return res.json({ success: false, message: err.message });
     }
   }
 
   // 🚀 DEFAULT 404
   return res.status(404).json({ success: false, message: "Endpoint not found" });
-                                                               }
+}
