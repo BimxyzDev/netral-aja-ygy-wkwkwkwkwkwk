@@ -1,0 +1,1328 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>𝙒𝙀𝘽 𝘾𝙋𝘼𝙉𝙀𝙇 — 𝘽𝙞𝙢𝙭𝙮𝙯 𝙤𝙛𝙛𝙞𝙘𝙞𝙖𝙡</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --primary: #4361ee;
+  --primary-light: #4895ef;
+  --secondary: #3a0ca3;
+  --background: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #2d3748;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ========== HEADER ========== */
+.header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 1.5rem 2rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo i {
+  font-size: 1.8rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* ========== LOGIN CARD ========== */
+.login-card {
+  max-width: 420px;
+  margin: 4rem auto;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.login-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.login-header i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 50%;
+}
+
+.login-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.login-body {
+  padding: 2rem;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.input-group i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+  color: var(--text);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+.btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #f87171);
+  color: white;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), #34d399);
+  color: white;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+/* ========== MAIN PANEL ========== */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  display: none;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.panel-header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ========== INFO BOX ========== */
+.info-box {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  color: #0369a1;
+}
+
+.info-box h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-box ul {
+  margin-left: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.info-box li {
+  margin-bottom: 0.25rem;
+}
+
+/* ========== SERVER FORM ========== */
+.server-form {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--text);
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+.select-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--text);
+  background: white;
+  cursor: pointer;
+}
+
+/* ========== BUTTON GROUP ========== */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.button-group .btn {
+  flex: 1;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.action-copy {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+}
+
+.action-open {
+  background: linear-gradient(135deg, var(--success), #34d399);
+  color: white;
+}
+
+.action-pass {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: white;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ========== RESULT BOX ========== */
+.result-box {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.result-box pre {
+  white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========== HISTORY SECTION ========== */
+.history-section {
+  display: none;
+}
+
+.history-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.history-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.history-title {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.history-date {
+  font-size: 0.875rem;
+  color: var(--text-light);
+}
+
+.history-details {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.history-details div {
+  margin-bottom: 0.5rem;
+}
+
+/* ========== SERVER STATUS ========== */
+.server-status {
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.status-online {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: var(--success);
+}
+
+.status-offline {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: var(--danger);
+}
+
+/* ========== SOCIAL LINKS ========== */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  font-size: 1.25rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+}
+
+.social-link.whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+}
+
+.social-link.support {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+/* ========== MODAL & TOAST ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateX(120%);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 999;
+  border-left: 4px solid var(--success);
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast.error {
+  border-left-color: var(--danger);
+}
+
+.toast.warning {
+  border-left-color: var(--warning);
+}
+
+.toast.info {
+  border-left-color: var(--primary);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .panel-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-btn {
+    width: 100%;
+  }
+  
+  .modal-content {
+    width: 95%;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-card {
+    margin: 2rem 1rem;
+  }
+  
+  .server-form {
+    padding: 1.5rem;
+  }
+  
+  .social-links {
+    gap: 1rem;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="logo">
+      <i class="fas fa-server"></i>
+      <div>
+        <h1>Web CPanel</h1>
+        <p class="subtitle">Bimxyz Official Reseller Panel</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- LOGIN SECTION -->
+<div id="loginDiv" class="login-card">
+  <div class="login-header">
+    <i class="fas fa-lock"></i>
+    <h2>Reseller Login</h2>
+    <p>Enter your credentials to continue</p>
+  </div>
+  <div class="login-body">
+    <div class="server-status status-online" id="serverStatus">🔄 Checking server status...</div>
+    
+    <div class="input-group">
+      <i class="fas fa-user"></i>
+      <input type="text" id="username" placeholder="Username" autocomplete="username">
+    </div>
+    
+    <div class="input-group">
+      <i class="fas fa-key"></i>
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+    </div>
+    
+    <button id="loginBtn" class="btn btn-primary">
+      <i class="fas fa-sign-in-alt"></i>
+      Sign In
+    </button>
+    
+    <div id="loginError" style="color: var(--danger); text-align: center; margin-top: 1rem; font-size: 0.875rem;"></div>
+    
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-light);">
+      Don't have an account?
+      <a href="https://www.bimxyz.my.id/beli-panel" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: none;">
+        Buy Now
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN PANEL -->
+<div id="panel" class="container">
+  <div class="panel-header">
+    <h2><i class="fas fa-cogs"></i> Server Management</h2>
+    <div class="server-status status-online" id="serverStatusPanel">🔄 Checking...</div>
+  </div>
+  
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <h3><i class="fas fa-info-circle"></i> Important Notes:</h3>
+    <ul>
+      <li>DO NOT DDoS the panel</li>
+      <li>Hide panel domain when taking screenshots</li>
+      <li>Do not share panel domain publicly</li>
+      <li>All transactions are non-refundable</li>
+      <li>Panel expires in ±1 full month</li>
+      <li>Created servers must be used</li>
+      <li>Join WhatsApp group for updates</li>
+    </ul>
+  </div>
+  
+  <!-- SERVER FORM -->
+  <div class="server-form">
+    <h3 style="margin-bottom: 1.5rem; color: var(--text);"><i class="fas fa-plus-circle"></i> Create New Server</h3>
+    
+    <div class="form-group">
+      <label for="serverName">Server Name</label>
+      <input type="text" id="serverName" class="form-control" placeholder="Enter server name (max 20 characters)" maxlength="20">
+    </div>
+    
+    <div class="form-group">
+      <label for="serverRam">RAM Capacity</label>
+      <select id="serverRam" class="select-control">
+        <option value="" disabled selected>Select RAM capacity...</option>
+        <option value="1">🔰 1 GB RAM</option>
+        <option value="2">🔰 2 GB RAM</option>
+        <option value="3">🔰 3 GB RAM</option>
+        <option value="4">🔰 4 GB RAM</option>
+        <option value="5">🔰 5 GB RAM</option>
+        <option value="6">🔰 6 GB RAM</option>
+        <option value="7">🔰 7 GB RAM</option>
+        <option value="8">🔰 8 GB RAM</option>
+        <option value="9">🔰 9 GB RAM</option>
+        <option value="10">🔰 10 GB RAM</option>
+        <option value="unlimited">🚀 UNLIMITED RAM</option>
+      </select>
+    </div>
+    
+    <div class="button-group">
+      <button id="createBtn" class="btn btn-success">
+        <i class="fas fa-plus"></i>
+        Create Server
+      </button>
+      <button id="listBtn" class="btn btn-primary">
+        <i class="fas fa-list"></i>
+        View Servers
+      </button>
+    </div>
+  </div>
+  
+  <!-- ACTION BUTTONS (HIDDEN BY DEFAULT) -->
+  <div id="actionButtons" class="action-buttons" style="display: none;">
+    <button class="action-btn action-copy" id="copyUserBtn">
+      <i class="fas fa-user"></i>
+      Copy Username
+    </button>
+    <button class="action-btn action-open" id="openPanelBtn">
+      <i class="fas fa-external-link-alt"></i>
+      Open Panel
+    </button>
+    <button class="action-btn action-pass" id="copyPassBtn">
+      <i class="fas fa-key"></i>
+      Copy Password
+    </button>
+  </div>
+  
+  <!-- RESULT DISPLAY -->
+  <div class="result-box">
+    <pre id="result">Ready to create servers...</pre>
+  </div>
+  
+  <!-- BOTTOM BUTTONS -->
+  <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+    <button id="historyBtn" class="btn" style="background: #e0e7ff; color: var(--primary); border: 1px solid #c7d2fe;">
+      <i class="fas fa-history"></i>
+      View History
+    </button>
+    <button id="logoutBtn" class="btn btn-danger">
+      <i class="fas fa-sign-out-alt"></i>
+      Logout
+    </button>
+  </div>
+  
+  <!-- SOCIAL LINKS -->
+  <div class="social-links">
+    <a href="https://chat.whatsapp.com/CoY2paBPem72BNAPvAjgyJ" target="_blank" class="social-link whatsapp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://www.bimxyz.my.id" target="_blank" class="social-link support">
+      <i class="fas fa-headset"></i>
+    </a>
+  </div>
+</div>
+
+<!-- HISTORY SECTION -->
+<div id="historySection" class="container history-section">
+  <div class="panel-header">
+    <h2><i class="fas fa-history"></i> Server History</h2>
+    <button id="backBtn" class="btn" style="background: #e0e7ff; color: var(--primary); border: 1px solid #c7d2fe;">
+      <i class="fas fa-arrow-left"></i>
+      Back to Panel
+    </button>
+  </div>
+  
+  <div id="historyList" class="history-list">
+    <!-- History cards will be inserted here -->
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="customModal" class="modal-overlay">
+  <div class="modal-content">
+    <div style="padding: 2rem; text-align: center;">
+      <div id="modalIcon" style="font-size: 3rem; color: var(--warning); margin-bottom: 1rem;">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 id="modalTitle" style="margin-bottom: 0.5rem; color: var(--text);">Confirmation</h3>
+      <p id="modalMessage" style="color: var(--text-light); margin-bottom: 2rem;"></p>
+      <div style="display: flex; gap: 1rem;">
+        <button id="modalCancel" class="btn" style="background: #f1f5f9; color: var(--text); border: 1px solid var(--border);">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button id="modalConfirm" class="btn btn-danger">
+          <i class="fas fa-check"></i> Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="customToast" class="toast">
+  <div id="toastIcon" style="font-size: 1.25rem;">
+    <i class="fas fa-check"></i>
+  </div>
+  <p id="toastMessage" style="margin: 0; font-size: 0.875rem;">Notification message</p>
+</div>
+
+<script>
+// ======================
+// UTILITY FUNCTIONS
+// ======================
+function escapeHTML(text) {
+  if (typeof text !== 'string') return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function showToast(message, type = 'success', duration = 3000) {
+  const toast = document.getElementById('customToast');
+  const toastMessage = document.getElementById('toastMessage');
+  const toastIcon = document.getElementById('toastIcon');
+  
+  toastMessage.textContent = message;
+  toast.className = `toast ${type}`;
+  
+  const icons = {
+    success: 'fa-check',
+    error: 'fa-times-circle',
+    warning: 'fa-exclamation-triangle',
+    info: 'fa-info-circle'
+  };
+  
+  toastIcon.innerHTML = `<i class="fas ${icons[type] || 'fa-check'}"></i>`;
+  
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+function showConfirm(title, message, type = 'warning', confirmText = 'Continue') {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('customModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalConfirm = document.getElementById('modalConfirm');
+    
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    
+    const iconClass = {
+      warning: 'fa-exclamation-triangle',
+      danger: 'fa-trash-alt',
+      info: 'fa-info-circle',
+      success: 'fa-check-circle'
+    }[type] || 'fa-exclamation-triangle';
+    
+    modalIcon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+    
+    if (type === 'danger') {
+      modalConfirm.className = 'btn btn-danger';
+      modalConfirm.innerHTML = `<i class="fas fa-check"></i> ${confirmText}`;
+    }
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      resolve(true);
+      modalConfirm.removeEventListener('click', handleConfirm);
+      modalCancel.removeEventListener('click', handleCancel);
+    };
+    
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      resolve(false);
+      modalConfirm.removeEventListener('click', handleConfirm);
+      modalCancel.removeEventListener('click', handleCancel);
+    };
+    
+    modalConfirm.addEventListener('click', handleConfirm);
+    modalCancel.addEventListener('click', handleCancel);
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        handleCancel();
+      }
+    });
+  });
+}
+
+// ======================
+// STATE MANAGEMENT
+// ======================
+let currentSessionId = localStorage.getItem('session_id') || '';
+let currentServerData = null;
+let loginAttemptCount = 0;
+const MAX_LOGIN_ATTEMPTS = 5;
+
+// ======================
+// UI ELEMENTS
+// ======================
+const loginDiv = document.getElementById('loginDiv');
+const panel = document.getElementById('panel');
+const historySection = document.getElementById('historySection');
+const serverStatus = document.getElementById('serverStatus');
+const serverStatusPanel = document.getElementById('serverStatusPanel');
+const resultDiv = document.getElementById('result');
+const actionButtons = document.getElementById('actionButtons');
+
+// ======================
+// SERVER STATUS CHECK
+// ======================
+async function checkServerStatus() {
+  try {
+    const res = await fetch('/api/server');
+    const data = await res.json();
+    
+    const statusElement = data.success ? 
+      `<span class="server-status status-online">✅ ONLINE</span>` :
+      `<span class="server-status status-offline">❌ OFFLINE</span>`;
+    
+    serverStatus.innerHTML = statusElement;
+    serverStatusPanel.innerHTML = statusElement;
+  } catch (error) {
+    serverStatus.innerHTML = `<span class="server-status status-offline">❌ OFFLINE</span>`;
+    serverStatusPanel.innerHTML = `<span class="server-status status-offline">❌ OFFLINE</span>`;
+  }
+}
+
+// Check on load and every 30 seconds
+checkServerStatus();
+setInterval(checkServerStatus, 30000);
+
+// ======================
+// SESSION MANAGEMENT
+// ======================
+function checkLogin() {
+  if (!currentSessionId) {
+    loginDiv.style.display = 'block';
+    panel.style.display = 'none';
+    historySection.style.display = 'none';
+    actionButtons.style.display = 'none';
+    return;
+  }
+  
+  // Verify session with server
+  fetch('/api/server', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      action: 'verify',
+      session_id: currentSessionId
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      loginDiv.style.display = 'none';
+      panel.style.display = 'block';
+      historySection.style.display = 'none';
+    } else {
+      localStorage.removeItem('session_id');
+      currentSessionId = '';
+      checkLogin();
+      showToast('Session expired, please login again', 'warning');
+    }
+  })
+  .catch(() => {
+    localStorage.removeItem('session_id');
+    currentSessionId = '';
+    checkLogin();
+  });
+}
+// ======================
+// LOGIN HANDLER
+// ======================
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const loginError = document.getElementById('loginError');
+  
+  loginError.textContent = '';
+  
+  // Rate limiting
+  loginAttemptCount++;
+  if (loginAttemptCount > MAX_LOGIN_ATTEMPTS) {
+    loginError.textContent = 'Too many login attempts. Please try again later.';
+    showToast('Too many login attempts', 'error');
+    return;
+  }
+  
+  try {
+    const res = await fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'login',
+        username,
+        password
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+      loginAttemptCount = 0;
+      currentSessionId = data.session_id;
+      localStorage.setItem('session_id', data.session_id);
+      
+      showToast('Login successful!', 'success');
+      checkLogin();
+    } else {
+      loginError.textContent = data.message || 'Login failed';
+      const attemptsLeft = MAX_LOGIN_ATTEMPTS - loginAttemptCount;
+      if (attemptsLeft > 0) {
+        showToast(`Login failed. ${attemptsLeft} attempts remaining`, 'error');
+      }
+    }
+  } catch (error) {
+    loginError.textContent = 'Connection error';
+    showToast('Server connection error', 'error');
+  }
+});
+
+// ======================
+// LOGOUT HANDLER
+// ======================
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try {
+    await fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'logout',
+        session_id: currentSessionId
+      })
+    });
+  } finally {
+    localStorage.removeItem('session_id');
+    localStorage.removeItem('serverHistory');
+    currentSessionId = '';
+    loginAttemptCount = 0;
+    currentServerData = null;
+    showToast('Logged out successfully', 'info');
+    checkLogin();
+  }
+});
+
+// ======================
+// CREATE SERVER
+// ======================
+document.getElementById('createBtn').addEventListener('click', async () => {
+  const name = document.getElementById('serverName').value.trim();
+  const ram = document.getElementById('serverRam').value;
+  
+  if (!name) {
+    showToast('Please enter server name', 'warning');
+    return;
+  }
+  
+  if (!ram) {
+    showToast('Please select RAM capacity', 'warning');
+    return;
+  }
+  
+  if (!currentSessionId) {
+    showToast('Session expired, please login again', 'error');
+    checkLogin();
+    return;
+  }
+  
+  resultDiv.textContent = 'Creating server...';
+  
+  try {
+    const res = await fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'create',
+        name,
+        ram,
+        session_id: currentSessionId
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+      const ramDisplay = ram === 'unlimited' ? 'Unlimited' : `${ram} GB`;
+      resultDiv.textContent = `✅ Server created successfully!\n\n` +
+                              `Panel URL: ${data.panel}\n` +
+                              `Username: ${data.username}\n` +
+                              `Email: ${data.email}\n` +
+                              `Password: ${data.password}\n` +
+                              `RAM: ${ramDisplay}\n\n` +
+                              `How to run: ${data.cara_run}`;
+      
+      currentServerData = {
+        username: data.username,
+        password: data.password,
+        panel: data.panel,
+        email: data.email,
+        serverId: data.serverId
+      };
+      
+      actionButtons.style.display = 'flex';
+      
+      // Save to history
+      const history = JSON.parse(localStorage.getItem('serverHistory') || '[]');
+      history.unshift({
+        date: new Date().toLocaleString(),
+        username: data.username,
+        password: data.password,
+        panel: data.panel,
+        email: data.email,
+        serverId: data.serverId
+      });
+      localStorage.setItem('serverHistory', JSON.stringify(history.slice(0, 50))); // Keep last 50
+      
+      showToast('Server created successfully!', 'success');
+    } else {
+      resultDiv.textContent = `❌ Error: ${data.message}`;
+      actionButtons.style.display = 'none';
+      showToast(`Failed: ${data.message}`, 'error');
+      
+      if (data.message.includes('Session') || data.message.includes('expired')) {
+        setTimeout(() => checkLogin(), 2000);
+      }
+    }
+  } catch (error) {
+    resultDiv.textContent = '❌ Connection error';
+    actionButtons.style.display = 'none';
+    showToast('Server connection error', 'error');
+  }
+});
+
+// ======================
+// LIST SERVERS
+// ======================
+document.getElementById('listBtn').addEventListener('click', async () => {
+  if (!currentSessionId) {
+    showToast('Session expired, please login again', 'error');
+    checkLogin();
+    return;
+  }
+  
+  resultDiv.textContent = 'Fetching server count...';
+  
+  try {
+    const res = await fetch('/api/server', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'list',
+        session_id: currentSessionId
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+      resultDiv.textContent = `📊 Total servers in panel: ${data.count}`;
+      showToast(`Found ${data.count} active servers`, 'info');
+    } else {
+      resultDiv.textContent = `❌ Error: ${data.message}`;
+      showToast(`Failed: ${data.message}`, 'error');
+    }
+  } catch (error) {
+    resultDiv.textContent = '❌ Connection error';
+    showToast('Server connection error', 'error');
+  }
+});
+
+// ======================
+// ACTION BUTTONS
+// ======================
+document.getElementById('copyUserBtn').addEventListener('click', () => {
+  if (!currentServerData?.username) return;
+  navigator.clipboard.writeText(currentServerData.username)
+    .then(() => showToast('Username copied to clipboard', 'success'))
+    .catch(() => showToast('Failed to copy username', 'error'));
+});
+
+document.getElementById('openPanelBtn').addEventListener('click', () => {
+  if (!currentServerData?.panel) return;
+  window.open(currentServerData.panel, '_blank');
+});
+
+document.getElementById('copyPassBtn').addEventListener('click', () => {
+  if (!currentServerData?.password) return;
+  navigator.clipboard.writeText(currentServerData.password)
+    .then(() => showToast('Password copied to clipboard', 'success'))
+    .catch(() => showToast('Failed to copy password', 'error'));
+});
+
+// ======================
+// HISTORY MANAGEMENT
+// ======================
+document.getElementById('historyBtn').addEventListener('click', () => {
+  panel.style.display = 'none';
+  historySection.style.display = 'block';
+  renderHistory();
+});
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  historySection.style.display = 'none';
+  panel.style.display = 'block';
+});
+
+function renderHistory() {
+  const historyList = document.getElementById('historyList');
+  const history = JSON.parse(localStorage.getItem('serverHistory') || '[]');
+  
+  if (history.length === 0) {
+    historyList.innerHTML = `
+      <div class="history-card" style="text-align: center; padding: 3rem;">
+        <i class="fas fa-history" style="font-size: 3rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+        <p style="color: var(--text-light);">No server history found</p>
+      </div>
+    `;
+    return;
+  }
+  
+  historyList.innerHTML = history.map((entry, index) => `
+    <div class="history-card">
+      <div class="history-header">
+        <span class="history-title">${escapeHTML(entry.username)}</span>
+        <span class="history-date">${escapeHTML(entry.date)}</span>
+      </div>
+      <div class="history-details">
+        <div><strong>Password:</strong> ${escapeHTML(entry.password)}</div>
+        <div><strong>Email:</strong> ${escapeHTML(entry.email)}</div>
+        <div><strong>Panel:</strong> <a href="${escapeHTML(entry.panel)}" target="_blank">Open Panel</a></div>
+      </div>
+      <button onclick="deleteHistoryItem(${index})" class="btn btn-danger" style="padding: 8px 16px; font-size: 0.875rem;">
+        <i class="fas fa-trash"></i> Delete
+      </button>
+    </div>
+  `).join('');
+}
+
+window.deleteHistoryItem = async function(index) {
+  const history = JSON.parse(localStorage.getItem('serverHistory') || '[]');
+  const item = history[index];
+  
+  const confirmed = await showConfirm(
+    'Delete Server',
+    `Are you sure you want to delete server ${escapeHTML(item.username)}?`,
+    'danger',
+    'Delete'
+  );
+  
+  if (!confirmed) return;
+    if (item.serverId && currentSessionId) {
+    try {
+      const res = await fetch('/api/server', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          action: 'delete',
+          serverId: item.serverId,
+          session_id: currentSessionId
+        })
+      });
+      
+      const data = await res.json();
+      if (!data.success) {
+        showToast('Failed to delete server from panel', 'warning');
+      }
+    } catch (error) {
+      // Ignore errors for history deletion
+    }
+  }
+  
+  history.splice(index, 1);
+  localStorage.setItem('serverHistory', JSON.stringify(history));
+  renderHistory();
+  showToast('Server deleted from history', 'success');
+};
+
+// ======================
+// INPUT VALIDATION
+// ======================
+document.getElementById('serverName').addEventListener('input', function(e) {
+  this.value = this.value.replace(/[^a-zA-Z0-9-_ ]/g, '').substring(0, 20);
+});
+
+document.getElementById('password').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    document.getElementById('loginBtn').click();
+  }
+});
+
+// ======================
+// INITIALIZE
+// ======================
+checkLogin();
+
+// Auto-check session every minute
+setInterval(() => {
+  if (currentSessionId) {
+    checkLogin();
+  }
+}, 60000);
+
+// Inactivity timer (20 minutes)
+let inactivityTimer;
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  if (currentSessionId) {
+    inactivityTimer = setTimeout(() => {
+      showToast('Session ended due to inactivity', 'warning');
+      document.getElementById('logoutBtn').click();
+    }, 20 * 60 * 1000);
+  }
+}
+
+['click', 'mousemove', 'keypress', 'scroll'].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer);
+});
+
+resetInactivityTimer();
+</script>
+</body>
+</html>
