@@ -126,5 +126,9 @@ export const users = [
   {
     "username": "maheszaa",
     "password": "maheza3213"
+  },
+  {
+    "username": "dexstore",
+    "password": "dexstore333"
   }
 ];
