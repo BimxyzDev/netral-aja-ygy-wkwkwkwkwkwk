@@ -1,4 +1,4 @@
-export const PANEL_URL = "https://pterodactyl.gw.bimxyz.my.id";
+export const PANEL_URL = "";
 export const API_KEY = "";
 export const NODE_ID = "1";
 export const NEST_ID = "5";
