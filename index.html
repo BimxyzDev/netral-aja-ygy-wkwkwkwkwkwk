@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -931,6 +932,7 @@ body {
       <li>Gunakan sebaik mungkin.</li>
       <li>Jangan sebar/giveaway panel</li>
       <li>Server yang telah dibuat harus digunakan.</li>
+      <li>BUKA PANEL LEWAT CHROME JIKA TIDAK BISA UPLOAD FILE</li>
     </ul>
   </div>
   
@@ -1169,17 +1171,17 @@ function showConfirm(title, message, type = 'warning', confirmText = 'Continue')
 // ======================
 function initializeRamSelection() {
   const ramOptions = [
-    { value: '1', label: '1 GB', badge: 'Basic' },
-    { value: '2', label: '2 GB', badge: 'Standard' },
-    { value: '3', label: '3 GB', badge: 'Plus' },
-    { value: '4', label: '4 GB', badge: 'Pro' },
-    { value: '5', label: '5 GB', badge: 'Max' },
-    { value: '6', label: '6 GB', badge: 'Ultra' },
-    { value: '7', label: '7 GB', badge: 'Ultra+' },
-    { value: '8', label: '8 GB', badge: 'Ultra Max' },
-    { value: '9', label: '9 GB', badge: 'Premium' },
-    { value: '10', label: '10 GB', badge: 'Premium+' },
-    { value: 'unlimited', label: 'Unlimited', badge: 'Ultimate', class: 'unlimited' }
+    { value: '1', label: '1 GB', badge: '150% CPU' },
+    { value: '2', label: '2 GB', badge: '300% CPU' },
+    { value: '3', label: '3 GB', badge: '450% CPU' },
+    { value: '4', label: '4 GB', badge: '600% CPU' },
+    { value: '5', label: '5 GB', badge: '750% CPU' },
+    { value: '6', label: '6 GB', badge: '900% CPU' },
+    { value: '7', label: '7 GB', badge: '1050% CPU' },
+    { value: '8', label: '8 GB', badge: '1200% CPU' },
+    { value: '9', label: '9 GB', badge: '1350% CPU' },
+    { value: '10', label: '10 GB', badge: '1500% CPU' },
+    { value: 'unlimited', label: 'Unlimited', badge: '∞% CPU', class: 'unlimited' }
   ];
 
   const ramSelectionDiv = document.getElementById('ramSelection');
